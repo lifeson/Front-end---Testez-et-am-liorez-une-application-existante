@@ -15,6 +15,7 @@ describe('UserService', () => {
     service = TestBed.inject(UserService);
   });
 
+  // [P2.4.E1] Analyse du code de test : test instantiation
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

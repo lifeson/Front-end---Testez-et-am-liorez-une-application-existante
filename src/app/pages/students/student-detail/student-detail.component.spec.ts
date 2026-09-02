@@ -30,6 +30,7 @@ describe('StudentDetailComponent', () => {
     fixture.detectChanges();
   });
 
+  // [P2.4.E1] Analyse du code de test : test création
   it('should create', () => {
     expect(component).toBeTruthy();
   });

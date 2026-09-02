@@ -30,10 +30,12 @@ describe('StudentFormComponent', () => {
     fixture.detectChanges();
   });
 
+  // [P2.4.E1] Analyse du code de test : test création
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  // [P2.4.E1] Analyse du code de test : test 'isEditMode' en mode création
   it('should be in create mode when no id param is present', () => {
     expect(component.isEditMode).toBeFalsy();
   });
