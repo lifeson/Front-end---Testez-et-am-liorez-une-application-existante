@@ -3,7 +3,7 @@
   <div class="card-body">
 
     @if (errorMessage) {
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" data-cy="error">
         {{ errorMessage }}
       </div>
     }
@@ -11,14 +11,16 @@
     @if (loading) {
       <p>Chargement...</p>
     } @else if (student) {
-      <p><strong>Prénom :</strong> {{ student.firstName }}</p>
-      <p><strong>Nom :</strong> {{ student.lastName }}</p>
-      <p><strong>Email :</strong> {{ student.email }}</p>
-      <p><strong>Date de naissance :</strong> {{ student.dateOfBirth }}</p>
-      <p><strong>Téléphone :</strong> {{ student.phoneNumber }}</p>
+      <div data-cy="detail">
+        <p><strong>Prénom :</strong> {{ student.firstName }}</p>
+        <p><strong>Nom :</strong> {{ student.lastName }}</p>
+        <p><strong>Email :</strong> {{ student.email }}</p>
+        <p><strong>Date de naissance :</strong> {{ student.dateOfBirth }}</p>
+        <p><strong>Téléphone :</strong> {{ student.phoneNumber }}</p>
 
-      <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-secondary">Modifier</a>
-      <a routerLink="/students" class="btn btn-link">Retour à la liste</a>
+        <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-secondary" data-cy="edit">Modifier</a>
+        <a routerLink="/students" class="btn btn-link">Retour à la liste</a>
+      </div>
     }
   </div>
 </div>

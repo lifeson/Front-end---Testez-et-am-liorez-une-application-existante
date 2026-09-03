@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run --browser chrome",
+    "e2e": "start-server-and-test start http://localhost:4200 cy:run"
   },
   "private": true,
   "dependencies": {
@@ -29,10 +32,15 @@
     "@angular-devkit/build-angular": "^19.0.7",
     "@angular/cli": "^19.2.16",
     "@angular/compiler-cli": "^19.2.0",
+    "@faker-js/faker": "^10.6.0",
     "@types/jest": "^29.5.4",
+    "cypress": "^15.21.1",
+    "cypress-monocart-coverage": "^1.0.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "^14.5.1",
+    "monocart-coverage-reports": "^2.13.0",
+    "start-server-and-test": "^3.0.12",
     "typescript": "~5.7.2"
   }
 }

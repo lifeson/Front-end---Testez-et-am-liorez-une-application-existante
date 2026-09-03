@@ -1,0 +1,4 @@
+[
+  { "id": 1, "firstName": "Ada", "lastName": "Lovelace", "email": "ada.lovelace@mail.com", "dateOfBirth": "1815-12-10", "phoneNumber": "0102030405", "createdAt": "2026-01-01T00:00:00", "updatedAt": "2026-01-01T00:00:00" },
+  { "id": 2, "firstName": "Alan", "lastName": "Turing", "email": "alan.turing@mail.com", "dateOfBirth": "1912-06-23", "phoneNumber": "0605040302", "createdAt": "2026-01-01T00:00:00", "updatedAt": "2026-01-01T00:00:00" }
+]

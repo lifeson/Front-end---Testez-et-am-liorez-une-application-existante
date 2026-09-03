@@ -40,3 +40,10 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Cypress / E2E
+/cypress/screenshots
+/cypress/videos
+/cypress/downloads
+/coverage-e2e
+/.nyc_output

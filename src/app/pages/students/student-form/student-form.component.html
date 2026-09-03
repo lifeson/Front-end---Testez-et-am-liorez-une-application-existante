@@ -1,9 +1,9 @@
 <div class="card m-3">
-  <h5 class="card-header">{{ isEditMode ? 'Modifier un étudiant' : 'Ajouter un étudiant' }}</h5>
+  <h5 class="card-header" data-cy="title">{{ isEditMode ? 'Modifier un étudiant' : 'Ajouter un étudiant' }}</h5>
   <div class="card-body">
 
     @if (errorMessage) {
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" data-cy="error">
         {{ errorMessage }}
       </div>
     }
@@ -19,6 +19,7 @@
               type="text"
               formControlName="firstName"
               class="form-control"
+              data-cy="firstName"
               [ngClass]="{ 'is-invalid': submitted && form['firstName'].errors }"
             />
             @if (submitted && form['firstName'].errors) {
@@ -35,6 +36,7 @@
               type="text"
               formControlName="lastName"
               class="form-control"
+              data-cy="lastName"
               [ngClass]="{ 'is-invalid': submitted && form['lastName'].errors }"
             />
             @if (submitted && form['lastName'].errors) {
@@ -53,6 +55,7 @@
             type="email"
             formControlName="email"
             class="form-control"
+            data-cy="email"
             [ngClass]="{ 'is-invalid': submitted && form['email'].errors }"
           />
           @if (submitted && form['email'].errors) {
@@ -69,19 +72,19 @@
 
         <div class="form-group">
           <label>Date de naissance</label>
-          <input type="date" formControlName="dateOfBirth" class="form-control" />
+          <input type="date" formControlName="dateOfBirth" class="form-control" data-cy="dateOfBirth" />
         </div>
 
         <div class="form-group">
           <label>Téléphone</label>
-          <input type="text" formControlName="phoneNumber" class="form-control" />
+          <input type="text" formControlName="phoneNumber" class="form-control" data-cy="phoneNumber" />
         </div>
 
         <div class="text-center">
-          <button class="btn btn-primary mr-1" [disabled]="loading">
+          <button class="btn btn-primary mr-1" [disabled]="loading" data-cy="submit">
             {{ isEditMode ? 'Enregistrer' : 'Ajouter' }}
           </button>
-          <button class="btn btn-secondary" type="reset" (click)="onReset()">Annuler</button>
+          <button class="btn btn-secondary" type="reset" (click)="onReset()" data-cy="reset">Annuler</button>
           <a routerLink="/students" class="btn btn-link">Retour à la liste</a>
         </div>
       </form>

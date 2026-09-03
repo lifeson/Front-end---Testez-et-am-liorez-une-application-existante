@@ -1,12 +1,12 @@
 <div class="card m-3">
   <h5 class="card-header d-flex justify-content-between align-items-center">
     <span>Liste des étudiants</span>
-    <a routerLink="/students/new" class="btn btn-primary btn-sm">Ajouter un étudiant</a>
+    <a routerLink="/students/new" class="btn btn-primary btn-sm" data-cy="add-student">Ajouter un étudiant</a>
   </h5>
   <div class="card-body">
 
     @if (errorMessage) {
-      <div class="alert alert-danger" role="alert">
+      <div class="alert alert-danger" role="alert" data-cy="error">
         {{ errorMessage }}
       </div>
     }
@@ -14,7 +14,7 @@
     @if (loading) {
       <p>Chargement...</p>
     } @else if (students.length === 0) {
-      <p>Aucun étudiant pour le moment.</p>
+      <p data-cy="empty">Aucun étudiant pour le moment.</p>
     } @else {
       <table class="table">
         <thead>
@@ -27,14 +27,14 @@
         </thead>
         <tbody>
           @for (student of students; track student.id) {
-            <tr>
+            <tr  data-cy="student-row">
               <td>{{ student.firstName }}</td>
               <td>{{ student.lastName }}</td>
               <td>{{ student.email }}</td>
               <td class="text-right">
-                <a [routerLink]="['/students', student.id]" class="btn btn-secondary btn-sm">Voir</a>
-                <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-secondary btn-sm">Modifier</a>
-                <button class="btn btn-danger btn-sm" (click)="deleteStudent(student.id)">Supprimer</button>
+                <a [routerLink]="['/students', student.id]" class="btn btn-secondary btn-sm"  data-cy="view">Voir</a>
+                <a [routerLink]="['/students', student.id, 'edit']" class="btn btn-secondary btn-sm" data-cy="edit">Modifier</a>
+                <button class="btn btn-danger btn-sm" (click)="deleteStudent(student.id)" data-cy="delete">Supprimer</button>
               </td>
             </tr>
           }
