@@ -15,4 +15,13 @@ module.exports = {
   // lcov        -> coverage/lcov.info (VS Code + SonarCloud) + coverage/lcov-report/
   // text-summary-> résumé en console à chaque run
   coverageReporters: ['html', 'lcov', 'text-summary'],
+  // Gate automatique : `npm test` / `jest` sort en erreur si un seuil < 80 %.
+  coverageThreshold: {
+    global: {
+      statements: 80,
+      branches: 80,
+      functions: 80,
+      lines: 80,
+    },
+  },
 };
