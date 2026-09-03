@@ -16,22 +16,24 @@ describe('StudentDetailComponent', () => {
       providers: [
         provideHttpClient(),
         provideRouter([]),
+        // StudentMockService.getById(1) renvoie of(<étudiant factice id=1>).
         { provide: StudentService, useValue: new StudentMockService() },
         {
           provide: ActivatedRoute,
-          useValue: { snapshot: { paramMap: convertToParamMap({ id: '1' }) } }
+          useValue: { snapshot: { paramMap: convertToParamMap({ id: '1' }) } },
         },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StudentDetailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // déclenche ngOnInit -> getById(1)
   });
 
-  // [P2.4.E1] Analyse du code de test : test création
-  it('should create', () => {
+  // TU-48 — Le composant s'instancie
+  // Entrée : paramMap = convertToParamMap({ id: '1' }), mock getById() -> of(<étudiant>)
+  // Sortie : instance truthy
+  it("s'instancie (TU-48)", () => {
     expect(component).toBeTruthy();
   });
 });
