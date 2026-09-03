@@ -1,24 +1,32 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    // NB : pas de fixture.detectChanges() ici — le template est <router-outlet/>,
+    // qui exige un Router configuré. Ces deux cas ne testent que la classe.
   });
 
-  // [P2.4.E1] Analyse du code de test : test création
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  // TU-15 — AppComponent : le composant s'instancie
+  // Entrée   : TestBed.createComponent(AppComponent)
+  // Sortie   : l'instance est truthy
+  it("s'instancie (TU-15)", () => {
+    expect(component).toBeTruthy();
   });
 
-  // [P2.4.E1] Analyse du code de test : test propriété 'title'
-  it(`should have the 'etudiant-frontend' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('etudiant-frontend');
+  // TU-16 — AppComponent : titre de l'application
+  // Entrée   : lecture de component.title
+  // Sortie   : 'etudiant-frontend'
+  it("expose le titre 'etudiant-frontend' (TU-16)", () => {
+    expect(component.title).toEqual('etudiant-frontend');
   });
 });
