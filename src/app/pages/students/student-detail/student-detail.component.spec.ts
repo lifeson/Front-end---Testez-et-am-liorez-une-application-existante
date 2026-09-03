@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { StudentDetailComponent } from './student-detail.component';
 import { provideHttpClient } from '@angular/common/http';
@@ -19,12 +19,13 @@ const s1: StudentResponse = {
   updatedAt: '2026-01-01T00:00:00',
 };
 
+// ═════════════════════════════════════════════════════════════════════════════
 describe('StudentDetailComponent', () => {
   let component: StudentDetailComponent;
   let fixture: ComponentFixture<StudentDetailComponent>;
 
   /** Mock renvoyant un étudiant connu (s1) pour getById(). */
-  class StudentDetailMock extends StudentMockService {
+  class DetailMock extends StudentMockService {
     override getById() {
       return of(s1);
     }
@@ -36,9 +37,8 @@ describe('StudentDetailComponent', () => {
       providers: [
         provideHttpClient(),
         provideRouter([]),
-        { provide: StudentService, useValue: new StudentDetailMock() },
+        { provide: StudentService, useValue: new DetailMock() },
         {
-          // id = '1' -> ngOnInit lit ce paramètre et appelle getById(1).
           provide: ActivatedRoute,
           useValue: { snapshot: { paramMap: convertToParamMap({ id: '1' }) } },
         },
@@ -47,27 +47,81 @@ describe('StudentDetailComponent', () => {
 
     fixture = TestBed.createComponent(StudentDetailComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // déclenche ngOnInit -> getById(1)
+    fixture.detectChanges(); // ngOnInit -> getById(1)
   });
 
   // TU-48 — Le composant s'instancie
-  // Entrée : paramMap = convertToParamMap({ id: '1' }), mock getById() -> of(s1)
-  // Sortie : instance truthy
   it("s'instancie (TU-48)", () => {
     expect(component).toBeTruthy();
   });
 
   // TU-59 — ngOnInit charge l'étudiant dans student
-  // Entrée : paramMap = { id: '1' } ; mock getById(1) -> of(s1) ; detectChanges
-  // Sortie : component.student est deep-equal à s1
   it("charge l'étudiant renvoyé par le service dans student (TU-59)", () => {
     expect(component.student).toEqual(s1);
   });
 
   // TU-60 — loading retombe à false après chargement
-  // Entrée : idem TU-59
-  // Sortie : component.loading === false
   it('remet loading à false après chargement (TU-60)', () => {
+    expect(component.loading).toBe(false);
+  });
+});
+
+// ═════════════════════════════════════════════════════════════════════════════
+describe('StudentDetailComponent (chargement en erreur)', () => {
+  let component: StudentDetailComponent;
+  let fixture: ComponentFixture<StudentDetailComponent>;
+  let studentService: StudentService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [StudentDetailComponent],
+      providers: [
+        provideHttpClient(),
+        provideRouter([]),
+        { provide: StudentService, useValue: new StudentMockService() },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { paramMap: convertToParamMap({ id: '1' }) } },
+        },
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(StudentDetailComponent);
+    component = fixture.componentInstance;
+    studentService = TestBed.inject(StudentService);
+    // Pas de detectChanges ici : chaque test pilote getById() AVANT ngOnInit.
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  // TU-86 — ngOnInit : erreur avec message
+  // Entrée : paramMap = { id: '1' } ; getById() -> throwError({ error: { message: 'Accès refusé' } }) ; detectChanges
+  // Sortie : errorMessage === 'Accès refusé' ; loading === false ; student === null
+  it("affiche le message d'erreur quand le chargement échoue (TU-86)", () => {
+    jest
+      .spyOn(studentService, 'getById')
+      .mockReturnValue(
+        throwError(() => ({ error: { message: 'Accès refusé' } })),
+      );
+
+    fixture.detectChanges(); // déclenche ngOnInit -> getById(1)
+
+    expect(component.errorMessage).toBe('Accès refusé');
+    expect(component.loading).toBe(false);
+    expect(component.student).toBeNull();
+  });
+
+  // TU-87 — ngOnInit : erreur sans message (fallback)
+  // Entrée : paramMap = { id: '1' } ; getById() -> throwError({}) ; detectChanges
+  // Sortie : errorMessage === 'Étudiant introuvable.' ; loading === false
+  it('affiche un message par défaut quand le chargement échoue sans message (TU-87)', () => {
+    jest.spyOn(studentService, 'getById').mockReturnValue(throwError(() => ({})));
+
+    fixture.detectChanges();
+
+    expect(component.errorMessage).toBe('Étudiant introuvable.');
     expect(component.loading).toBe(false);
   });
 });
