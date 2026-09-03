@@ -16,18 +16,28 @@ describe('StudentListComponent', () => {
       providers: [
         provideHttpClient(),
         provideRouter([]),
+        // StudentMockService.getAll() renvoie of([]) -> liste vide en sortie.
         { provide: StudentService, useValue: new StudentMockService() },
-      ]
-    })
-    .compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StudentListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // déclenche ngOnInit -> loadStudents()
   });
 
-  // [P2.4.E1] Analyse du code de test : test création
-  it('should create', () => {
+  // TU-46 — Le composant s'instancie
+  // Entrée : createComponent + detectChanges (mock getAll() -> of([]))
+  // Sortie : instance truthy
+  it("s'instancie (TU-46)", () => {
     expect(component).toBeTruthy();
+  });
+
+  // TU-47 — État initial de la liste
+  // Entrée : après detectChanges, mock getAll() -> of([])
+  // Sortie : students vaut [] et loading === false
+  it('a une liste vide et loading à false après chargement (TU-47)', () => {
+    expect(component.students).toEqual([]);
+    expect(component.loading).toBe(false);
   });
 });
