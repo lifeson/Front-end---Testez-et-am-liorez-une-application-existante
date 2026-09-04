@@ -14,9 +14,10 @@
       <form [formGroup]="studentForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <div class="form-group col-5">
-            <label>Prénom</label>
+            <label for="firstName">Prénom</label>
             <input
               type="text"
+              id="firstName"
               formControlName="firstName"
               class="form-control"
               data-cy="firstName"
@@ -31,9 +32,10 @@
             }
           </div>
           <div class="form-group col-5">
-            <label>Nom</label>
+            <label for="lastName">Nom</label>
             <input
               type="text"
+              id="lastName"
               formControlName="lastName"
               class="form-control"
               data-cy="lastName"
@@ -50,9 +52,10 @@
         </div>
 
         <div class="form-group">
-          <label>Email</label>
+          <label for="email">Email</label>
           <input
             type="email"
+            id="email"
             formControlName="email"
             class="form-control"
             data-cy="email"
@@ -71,13 +74,13 @@
         </div>
 
         <div class="form-group">
-          <label>Date de naissance</label>
-          <input type="date" formControlName="dateOfBirth" class="form-control" data-cy="dateOfBirth" />
+          <label for="dateOfBirth">Date de naissance</label>
+          <input type="date" id="dateOfBirth" formControlName="dateOfBirth" class="form-control" data-cy="dateOfBirth" />
         </div>
 
         <div class="form-group">
-          <label>Téléphone</label>
-          <input type="text" formControlName="phoneNumber" class="form-control" data-cy="phoneNumber" />
+          <label for="phoneNumber">Téléphone</label>
+          <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" data-cy="phoneNumber" />
         </div>
 
         <div class="text-center">

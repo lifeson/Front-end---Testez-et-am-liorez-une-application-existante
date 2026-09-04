@@ -4,9 +4,10 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="form-group col-5">
-          <label>First Name</label>
+          <label for="firstName">First Name</label>
           <input
             type="text"
+            id="firstName"
             formControlName="firstName"
             class="form-control"
             data-cy="firstName"
@@ -21,9 +22,10 @@
           }
         </div>
         <div class="form-group col-5">
-          <label>Last Name</label>
+          <label for="lastName">Last Name</label>
           <input
             type="text"
+            id="lastName"
             formControlName="lastName"
             class="form-control"
             data-cy="lastName"
@@ -39,9 +41,10 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Login</label>
+        <label for="login">Login</label>
         <input
           type="text"
+          id="login"
           formControlName="login"
           class="form-control"
           data-cy="login"
@@ -57,9 +60,10 @@
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+        <label for="password">Password</label>
         <input
           type="text"
+          id="password"
           formControlName="password"
           class="form-control"
           data-cy="password"
